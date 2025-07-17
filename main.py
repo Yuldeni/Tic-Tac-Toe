@@ -1,6 +1,7 @@
 import copy
 
 def imprimir_juego(juego):
+    print("\n")
     for i in range(0,3):
         for j in range(0,3):
             if j == 2:
@@ -9,17 +10,18 @@ def imprimir_juego(juego):
                 print(f" {juego[i][j]} |", end="")
         if i != 2:
             print("-----------")
+    print("\n")
 
-def jugador_tira(jugador):
-    if jugador == 1:
+def jugador_tira(num_jugador, nombre_jugador):
+    if num_jugador == 1:
         simbolo = "O"
     else:
         simbolo = "X"
 
-    casilla = int(input("Ingresa la casilla donde quieres tirar (1-9): "))
+    casilla = int(input(f"{nombre_jugador}, ingresa la casilla donde quieres tirar (1-9): "))
     while casilla in casillas_ocupadas or casilla > 9 or casilla <= 0:
         print("Esa casilla no está disponible, intenta otra vez.")
-        casilla = int(input("Ingresa la casilla donde quieres tirar (1-9): "))
+        casilla = int(input(f"{nombre_jugador}, ingresa la casilla donde quieres tirar (1-9): "))
 
     casillas_ocupadas.append(casilla)
 
@@ -78,7 +80,7 @@ def verificar_ganador():
 def continuar_juego():
     keep_playing = -1
     while keep_playing != 0 or keep_playing != 1:
-        keep_playing = int(input("¿Deseas jugar otro juego? Ingresa 0 (No) o 1 (Sí): "))
+        keep_playing = int(input("\n¿Deseas jugar otro juego? Ingresa 0 (No) o 1 (Sí): "))
         if keep_playing == 0:
             return False
         elif keep_playing == 1:
@@ -109,18 +111,21 @@ while on:
     casillas_ocupadas = []
     imprimir_juego(juego)
 
+    jugador1 = input("Ingresa el nombre del jugador 1: ")
+    jugador2 = input("Ingresa el nombre del jugador 2: ")
+
     for i in range(0,9):
         if i % 2 == 0:
-            jugador_tira(1)
+            jugador_tira(1, jugador1)
         else:
-            jugador_tira(2)
+            jugador_tira(2, jugador2)
         
         if i >= 4:
             if verificar_ganador():
                 if i % 2 == 0:
-                    print("¡El jugador 1 ha ganado!")
+                    print(f"¡{jugador1} ha ganado!")
                 else:
-                    print("¡El jugador 2 ha ganado!")
+                    print(f"¡{jugador2} ha ganado!")
 
                 if not continuar_juego():
                     on = False
